@@ -1,6 +1,7 @@
 require "jekyll"
 
 module Jekyll
+
   class ServerRenderedTweet < Liquid::Tag
 	  def initialize(tag_name, text, tokens)
 	  	super
@@ -8,7 +9,11 @@ module Jekyll
 	  end
 
 	  def render(context)
-	  	"#{@text} #{Time.now}"
+      @template = Liquid::Template::parse(
+        File.read(File.join(File.dirname(__FILE__), 'tweet.liquid'))
+      )
+
+      @template.render()
 	  end
 
   end
