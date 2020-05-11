@@ -40,7 +40,10 @@ module Jekyll
       @template.render(
         'tweet_id' => @text,
         'user_screen_name' => tweet.user.screen_name,
-        'user_profile_image_uri' => tweet.user.profile_image_url_https.to_s
+        'user_name' => tweet.user.name,
+        'user_profile_image_uri' => tweet.user.profile_image_url_https.to_s,
+        'text' => tweet.text,
+        'favorite_count' => tweet.favorite_count
       )
     end
 
