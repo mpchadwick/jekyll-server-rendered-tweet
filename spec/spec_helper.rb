@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "jekyll/server/rendered/tweet"
+require 'jekyll-server-rendered-tweet'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
