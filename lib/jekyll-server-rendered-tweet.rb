@@ -7,15 +7,15 @@ module Jekyll
 
     attr_writer :client
 
-	  def initialize(tag_name, text, tokens)
-	  	super
+    def initialize(tag_name, text, tokens)
+      super
       @client = nil
-	  	@text = text
-	  end
+      @text = text
+    end
 
-	  def render(context)
+    def render(context)
       render_tweet()
-	  end
+    end
 
     def render_tweet()
       if @client == nil
