@@ -27,24 +27,26 @@ module Jekyll
         end
       end
 
-      #tweet = @client.status(@text)
-      tweet = Marshal::load(
-        File.open(File.join(
-          File.dirname(__FILE__), '..', 'tweet.marshal'
-        ), 'r')
-      )
+      tweet = @client.status(@text, tweet_mode: 'extended')
 
       @template = Liquid::Template::parse(
         File.read(File.join(File.dirname(__FILE__), 'tweet.liquid'))
       )
-      @template.render(
+
+      params = {
         'tweet_id' => @text,
         'user_screen_name' => tweet.user.screen_name,
         'user_name' => tweet.user.name,
         'user_profile_image_uri' => tweet.user.profile_image_url_https.to_s,
         'text' => tweet.text,
-        'favorite_count' => tweet.favorite_count
-      )
+        'created_at_display' => tweet.created_at.strftime('%l:%M %p - %b %e, %Y')
+      }
+
+      if tweet.favorite_count > 0
+        params['favorite_count'] = tweet.favorite_count
+      end
+
+      @template.render(params)
     end
 
   end

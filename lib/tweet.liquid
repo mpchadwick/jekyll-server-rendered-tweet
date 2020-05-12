@@ -163,13 +163,14 @@
 		{{text}}
 	</p>
 	<div class="tweet-footer">
-		<a class="tweet-link" href="https://twitter.com/intent/like?tweet_id={{tweet_id}}">
+		<a class="tweet-like" href="https://twitter.com/intent/like?tweet_id={{tweet_id}}">
 			<div class="tweet-like-icon" aria-label="Like" title="Link" role="img"></div>
 			<span class="tweet-like-count">
 				{% if favorite_count %}{{favorite_count}}{% endif %}
 			</span>
 		</a>
+        <a class="tweet-date" href="https://twitter.com/{{user_screen_name}}/status/{{tweet_id}}">
+            {{created_at_display}}
+        </a>
 	</div>
-
-	Rendering Tweet {{tweet_id}}
 </blockquote>
