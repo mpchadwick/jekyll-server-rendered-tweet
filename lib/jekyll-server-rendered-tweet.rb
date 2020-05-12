@@ -2,9 +2,7 @@ require 'jekyll'
 require 'twitter'
 
 module Jekyll
-
   class ServerRenderedTweet < Liquid::Tag
-
     attr_writer :client
 
     def initialize(tag_name, text, tokens)
@@ -13,12 +11,12 @@ module Jekyll
       @text = text
     end
 
-    def render(context)
-      render_tweet()
+    def render(_context)
+      render_tweet
     end
 
-    def render_tweet()
-      if @client == nil
+    def render_tweet
+      if @client.nil?
         @client = Twitter::REST::Client.new do |config|
           config.consumer_key = ENV['TWITTER_CONSUMER_KEY']
           config.consumer_secret = ENV['TWITTER_CONSUMER_SECRET']
@@ -42,14 +40,13 @@ module Jekyll
         'created_at_display' => tweet.created_at.strftime('%l:%M %p - %b %e, %Y')
       }
 
-      if tweet.favorite_count > 0
+      if tweet.favorite_count.positive?
         params['favorite_count'] = tweet.favorite_count
       end
 
       @template.render(params)
     end
-
   end
 end
 
-Liquid::Template.register_tag("tweet", Jekyll::ServerRenderedTweet)
+Liquid::Template.register_tag('tweet', Jekyll::ServerRenderedTweet)
