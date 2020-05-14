@@ -12,10 +12,10 @@ module Jekyll
     end
 
     def render(_context)
-      render_tweet
+      ServerRenderedTweet.render_tweet(@text)
     end
 
-    def render_tweet
+    def self.render_tweet(tweet_id)
       if @client.nil?
         @client = Twitter::REST::Client.new do |config|
           config.consumer_key = ENV['TWITTER_CONSUMER_KEY']
@@ -25,14 +25,14 @@ module Jekyll
         end
       end
 
-      tweet = @client.status(@text, tweet_mode: 'extended')
+      tweet = @client.status(tweet_id, tweet_mode: 'extended')
 
       @template = Liquid::Template::parse(
         File.read(File.join(File.dirname(__FILE__), 'tweet.liquid'))
       )
 
       params = {
-        'tweet_id' => @text,
+        'tweet_id' => tweet_id,
         'user_screen_name' => tweet.user.screen_name,
         'user_name' => tweet.user.name,
         'user_profile_image_uri' => tweet.user.profile_image_url_https.to_s,
