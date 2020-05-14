@@ -8,7 +8,7 @@ module Jekyll
     def initialize(tag_name, text, tokens)
       super
       @client = nil
-      @text = text
+      @text = text.strip
     end
 
     def render(_context)
