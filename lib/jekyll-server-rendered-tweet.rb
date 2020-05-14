@@ -12,20 +12,17 @@ module Jekyll
     end
 
     def render(_context)
-      ServerRenderedTweet.render_tweet(@text)
+      @client = Twitter::REST::Client.new do |config|
+        config.consumer_key = ENV['TWITTER_CONSUMER_KEY']
+        config.consumer_secret = ENV['TWITTER_CONSUMER_SECRET']
+        config.access_token = ENV['TWITTER_ACCESS_TOKEN']
+        config.access_token_secret = ENV['TWITTER_ACCESS_TOKEN_SECRET']
+      end
+      ServerRenderedTweet.render_tweet(@text, @client)
     end
 
-    def self.render_tweet(tweet_id)
-      if @client.nil?
-        @client = Twitter::REST::Client.new do |config|
-          config.consumer_key = ENV['TWITTER_CONSUMER_KEY']
-          config.consumer_secret = ENV['TWITTER_CONSUMER_SECRET']
-          config.access_token = ENV['TWITTER_ACCESS_TOKEN']
-          config.access_token_secret = ENV['TWITTER_ACCESS_TOKEN_SECRET']
-        end
-      end
-
-      tweet = @client.status(tweet_id, tweet_mode: 'extended')
+    def self.render_tweet(tweet_id, client)
+      tweet = client.status(tweet_id, tweet_mode: 'extended')
 
       @template = Liquid::Template::parse(
         File.read(File.join(File.dirname(__FILE__), 'tweet.liquid'))
