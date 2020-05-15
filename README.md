@@ -1,39 +1,30 @@
-# Jekyll::Server::Rendered::Tweet
+# jekyll-server-rendered-tweet
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/jekyll/server/rendered/tweet`. To experiment with that code, run `bin/console` for an interactive prompt.
+A Jekyll plugin for server rendering embeded Tweets during the build process.
 
-TODO: Delete this and the text above, and describe your gem
+This was inspired by and modeled after [eleventy-plugin-embed-tweet](https://github.com/KyleMit/eleventy-plugin-embed-tweet)
 
 ## Installation
 
-Add this line to your application's Gemfile:
+d this line to your `Gemfile`:
 
 ```ruby
-gem 'jekyll-server-rendered-tweet'
+group :jekyll_plugins do
+  gem 'jekyll-server-rendered-tweet'
+end
 ```
 
 And then execute:
 
     $ bundle install
 
-Or install it yourself as:
-
-    $ gem install jekyll-server-rendered-tweet
-
 ## Usage
 
 TODO: Write usage instructions here
 
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/jekyll-server-rendered-tweet.
-
+Bug reports and pull requests are welcome on GitHub at https://github.com/mpchadwick/jekyll-server-rendered-tweet.
 
 ## License
 
