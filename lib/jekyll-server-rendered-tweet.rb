@@ -33,13 +33,14 @@ module Jekyll
 
     def self.render_params(tweet_id, tweet)
       created_at = tweet.created_at.strftime('%l:%M %p - %b %e, %Y')
+      text = replace_entities(tweet)
 
       params = {
         'tweet_id' => tweet_id,
         'user_screen_name' => tweet.user.screen_name,
         'user_name' => tweet.user.name,
         'user_profile_image_uri' => tweet.user.profile_image_url_https.to_s,
-        'text' => tweet.text,
+        'text' => text,
         'created_at_display' => created_at
       }
 
@@ -48,6 +49,28 @@ module Jekyll
       end
 
       params
+    end
+
+    def self.replace_entities(tweet)
+      text = tweet.text.dup
+
+      tweet.hashtags.each do |hashtag|
+        start_pos = hashtag.indices[0]
+        end_pos = hashtag.indices[1] - 1
+        before = tweet.text[start_pos..end_pos]
+        after = hashtag_link(before)
+        text.gsub!(before, after)
+      end
+
+      text
+    end
+
+    def self.hashtag_link(hashtag)
+      link = '<a href="https://twitter.com/hashtag/'
+      link += hashtag[1..-1]
+      link += '">' + hashtag + '</a>'
+
+      link
     end
 
     private_class_method :render_params

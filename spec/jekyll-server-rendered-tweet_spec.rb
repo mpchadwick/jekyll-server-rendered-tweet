@@ -1,7 +1,7 @@
 RSpec.describe Jekyll::ServerRenderedTweet do
 
   class Tweet
-    attr_accessor :text, :created_at, :favorite_count, :user
+    attr_accessor :text, :created_at, :favorite_count, :user, :hashtags
   end
 
   class User
@@ -24,6 +24,7 @@ RSpec.describe Jekyll::ServerRenderedTweet do
     tweet.created_at = DateTime.parse('2020-03-17 00:51:51 UTC')
     tweet.favorite_count = 2
     tweet.user = user
+    tweet.hashtags = []
     client = double("client")
 
     allow(client).to receive(:status).and_return(tweet)
@@ -42,6 +43,7 @@ RSpec.describe Jekyll::ServerRenderedTweet do
     tweet.created_at = DateTime.parse('2020-03-17 00:51:51 UTC')
     tweet.favorite_count = 0
     tweet.user = user
+    tweet.hashtags = []
     client = double("client")
 
     allow(client).to receive(:status).and_return(tweet)
