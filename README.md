@@ -1,5 +1,7 @@
 # jekyll-server-rendered-tweet
 
+[![Build Status](https://travis-ci.org/mpchadwick/jekyll-server-rendered-tweet.svg?branch=master)](https://travis-ci.org/mpchadwick/jekyll-server-rendered-tweet)
+
 A Jekyll plugin for server rendering embeded Tweets during the build process.
 
 This was inspired by and modeled after [eleventy-plugin-embed-tweet](https://github.com/KyleMit/eleventy-plugin-embed-tweet)
