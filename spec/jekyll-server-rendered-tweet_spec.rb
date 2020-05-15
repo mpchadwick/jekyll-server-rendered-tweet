@@ -33,4 +33,22 @@ RSpec.describe Jekyll::ServerRenderedTweet do
 
     expect(result).to include(expected)
   end
+
+  it "has an empty favorite_count for tweets with no likes" do
+    user.screen_name = 'maxpchadwick'
+    user.name = 'Max Chadwick'
+    user.profile_image_url_https = 'https://pbs.twimg.com/profile_images/821919775429275648/JDEa0PC__normal.jpg'
+    tweet.text = 'COVID-19 is, deservedly, the top news story right now. But...don\'t forget to respond to the Census!'
+    tweet.created_at = DateTime.parse('2020-03-17 00:51:51 UTC')
+    tweet.favorite_count = 0
+    tweet.user = user
+    client = double("client")
+
+    allow(client).to receive(:status).and_return(tweet)
+
+    result = Jekyll::ServerRenderedTweet.render_tweet("1239716041774837765", client)
+    expected = File.read(File.dirname(__FILE__) + '/fixtures/no-likes.html')
+
+    expect(result).to include(expected)
+  end
 end
