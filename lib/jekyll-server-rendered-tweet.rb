@@ -24,9 +24,15 @@ module Jekyll
     def self.render_tweet(tweet_id, client)
       tweet = client.status(tweet_id, tweet_mode: 'extended')
 
-      @template = Liquid::Template::parse(
+      @template = Liquid::Template.parse(
         File.read(File.join(File.dirname(__FILE__), 'tweet.liquid'))
       )
+
+      @template.render(render_params(tweet_id, tweet))
+    end
+
+    def self.render_params(tweet_id, tweet)
+      created_at = tweet.created_at.strftime('%l:%M %p - %b %e, %Y')
 
       params = {
         'tweet_id' => tweet_id,
@@ -34,15 +40,17 @@ module Jekyll
         'user_name' => tweet.user.name,
         'user_profile_image_uri' => tweet.user.profile_image_url_https.to_s,
         'text' => tweet.text,
-        'created_at_display' => tweet.created_at.strftime('%l:%M %p - %b %e, %Y')
+        'created_at_display' => created_at
       }
 
       if tweet.favorite_count.positive?
         params['favorite_count'] = tweet.favorite_count
       end
 
-      @template.render(params)
+      params
     end
+
+    private_class_method :render_params
   end
 end
 
